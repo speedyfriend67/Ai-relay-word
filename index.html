@@ -20,6 +20,10 @@
       padding: 8px 16px;
       cursor: pointer;
     }
+
+    #result {
+      margin-top: 20px;
+    }
   </style>
 </head>
 <body>
@@ -37,15 +41,44 @@
     function relayLastWord() {
       const userInput = document.getElementById('userInput').value;
 
+      // Split the user input into an array of words
       const words = userInput.split(/\s+/);
 
+      // Get the last word
       const lastWord = words[words.length - 1];
 
+      // Create a word with the first letter matching the last letter of the user's input
+      const createdWord = createWord(lastWord);
+
+      // Display the result
       const resultDiv = document.getElementById('result');
       resultDiv.innerHTML = `
         <p>You said: "${userInput}"</p>
         <p>The last word is: "${lastWord}"</p>
+        <p>AI created word: "${createdWord}"</p>
       `;
+    }
+
+    function createWord(lastWord) {
+      if (lastWord.length === 0) {
+        return "No input";
+      }
+
+      const firstLetter = lastWord.charAt(lastWord.length - 1);
+      const vowels = 'aeiou';
+      const consonants = 'bcdfghjklmnpqrstvwxyz';
+
+      let createdWord = '';
+
+      if (vowels.includes(firstLetter.toLowerCase())) {
+        createdWord = consonants.charAt(Math.floor(Math.random() * consonants.length));
+      } else if (consonants.includes(firstLetter.toLowerCase())) {
+        createdWord = vowels.charAt(Math.floor(Math.random() * vowels.length));
+      } else {
+        createdWord = 'Invalid input';
+      }
+
+      return createdWord;
     }
   </script>
 
