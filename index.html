@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Last Word Relay</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin: 50px;
+    }
+
+    input {
+      padding: 8px;
+      margin-right: 8px;
+    }
+
+    button {
+      padding: 8px 16px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>Last Word Relay</h2>
+
+  <div>
+    <input type="text" id="userInput" placeholder="Type something...">
+    <button onclick="relayLastWord()">Relay Last Word</button>
+  </div>
+
+  <div id="result"></div>
+
+  <script>
+    function relayLastWord() {
+      const userInput = document.getElementById('userInput').value;
+
+      const words = userInput.split(/\s+/);
+
+      const lastWord = words[words.length - 1];
+
+      const resultDiv = document.getElementById('result');
+      resultDiv.innerHTML = `
+        <p>You said: "${userInput}"</p>
+        <p>The last word is: "${lastWord}"</p>
+      `;
+    }
+  </script>
+
+</body>
+</html>
