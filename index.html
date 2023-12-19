@@ -1,90 +1,40 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Last Word Relay</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      text-align: center;
-      margin: 50px;
-    }
+let previousWord = "";
 
-    input {
-      padding: 8px;
-      margin-right: 8px;
-    }
+function relayLastWord() {
+  const userInput = document.getElementById('userInput').value;
 
-    button {
-      padding: 8px 16px;
-      cursor: pointer;
-    }
+  const words = userInput.split(/\s+/);
+  const lastWord = words[words.length - 1];
+  const createdWord = createWord(lastWord);
 
-    #result {
-      margin-top: 20px;
-    }
-  </style>
-</head>
-<body>
+  const resultDiv = document.getElementById('result');
+  resultDiv.innerHTML = `
+    <p>You said: "${userInput}"</p>
+    <p>The last word is: "${lastWord}"</p>
+    <p>AI created word: "${createdWord}"</p>
+  `;
+}
 
-  <h2>Last Word Relay</h2>
+function createWord(lastWord) {
+  if (lastWord.length === 0) {
+    return "No input";
+  }
 
-  <div>
-    <input type="text" id="userInput" placeholder="Type something...">
-    <button onclick="relayLastWord()">Relay Last Word</button>
-  </div>
+  const firstLetter = lastWord.charAt(lastWord.length - 1);
+  const wordList = ["apple", "banana", /* ... (your word list) ... */];
 
-  <div id="result"></div>
+  const filteredWords = wordList.filter(word => word.charAt(0).toLowerCase() === firstLetter.toLowerCase());
 
-  <script>
-    function relayLastWord() {
-      const userInput = document.getElementById('userInput').value;
+  if (filteredWords.length > 0) {
+    let newWord = "";
+    do {
+      const randomIndex = Math.floor(Math.random() * filteredWords.length);
+      newWord = filteredWords[randomIndex];
+    } while (newWord === previousWord);
 
-      
-      const words = userInput.split(/\s+/);
-
-    
-      const lastWord = words[words.length - 1];
-
-      
-      const createdWord = createWord(lastWord);
-
-     
-      const resultDiv = document.getElementById('result');
-      resultDiv.innerHTML = `
-        <p>You said: "${userInput}"</p>
-        <p>The last word is: "${lastWord}"</p>
-        <p>AI created word: "${createdWord}"</p>
-      `;
-    }
-
-    function createWord(lastWord) {
-      if (lastWord.length === 0) {
-        return "No input";
-      }
-
-      const firstLetter = lastWord.charAt(lastWord.length - 1);
-      const wordList = [
-        "apple", "banana", "cherry", "dog", "elephant", "flower", "grape", "house", "igloo", "jungle",
-        "kiwi", "lemon", "monkey", "notebook", "orange", "parrot", "quilt", "rose", "strawberry", "tiger",
-        "umbrella", "vase", "watermelon", "xylophone", "yogurt", "zebra", "ant", "bear", "carrot", "dolphin", "eggplant", "fox", "giraffe", "hat", "ice cream", "jigsaw",
-        "kangaroo", "leopard", "mango", "nectarine", "owl", "penguin", "quokka", "rainbow", "sunset", "tree",
-        "umbrella", "violin", "waterfall", "xylophone", "yak", "zeppelin"
-      ];
-
-     
-      const filteredWords = wordList.filter(word => word.charAt(0).toLowerCase() === firstLetter.toLowerCase());
-
-      if (filteredWords.length > 0) {
-       
-        const randomIndex = Math.floor(Math.random() * filteredWords.length);
-        return filteredWords[randomIndex];
-      } else {
-        return "No suitable word found";
-      }
-    }
-  </script>
-
-</body>
-</html>
+    previousWord = newWord;
+    return newWord;
+  } else {
+    return "No suitable word found";
+  }
+}
