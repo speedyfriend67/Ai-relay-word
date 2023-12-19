@@ -3,11 +3,52 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Word Relay Game</title>
+  <title>Word Relay with AI</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      background-color: #f5f5f5;
+      text-align: center;
+      margin: 50px;
+    }
+
+    h1 {
+      color: #333;
+    }
+
+    label {
+      font-size: 18px;
+      margin-right: 10px;
+    }
+
+    input {
+      padding: 8px;
+      font-size: 16px;
+    }
+
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      background-color: #4caf50;
+      color: #fff;
+      border: none;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #45a049;
+    }
+
+    p {
+      font-size: 18px;
+      color: #333;
+      margin-top: 20px;
+    }
+  </style>
 </head>
 <body>
 
-  <h1>Word Relay Game</h1>
+  <h1>Word Relay with AI</h1>
   <label for="wordInput">Enter a word:</label>
   <input type="text" id="wordInput">
   <button onclick="playWordRelay()">Play</button>
@@ -20,18 +61,30 @@
     function playWordRelay() {
       const wordInput = document.getElementById('wordInput');
       const result = document.getElementById('result');
-      const nextWord = wordInput.value.toLowerCase();
+      const userWord = wordInput.value.toLowerCase();
 
-      if (!currentWord || currentWord.slice(-1) === nextWord.charAt(0) && !usedWords.has(nextWord)) {
-        usedWords.add(nextWord);
-        currentWord = nextWord;
-        result.textContent = `Good! Next word should start with '${currentWord.slice(-1)}'`;
+      if (!currentWord || currentWord.slice(-1) === userWord.charAt(0) && !usedWords.has(userWord)) {
+        usedWords.add(userWord);
+        currentWord = userWord;
+
+        const aiWord = generateRandomWord(userWord);
+        usedWords.add(aiWord);
+
+        result.textContent = `You: ${userWord} | AI: ${aiWord}`;
         wordInput.value = '';
-      } else if (usedWords.has(nextWord)) {
+      } else if (usedWords.has(userWord)) {
         result.textContent = 'You repeated a word. Try again!';
       } else {
         result.textContent = `Invalid word. It should start with '${currentWord.slice(-1)}'. Try again!`;
       }
+    }
+
+    function generateRandomWord(userWord) {
+      // This is a basic example. You might want to replace this logic with more advanced AI capabilities.
+      const startingLetter = userWord.slice(-1);
+      const randomWords = ["apple", "banana", "chocolate", "dog", "elephant", "friday", "guitar"];
+      const filteredWords = randomWords.filter(word => word.startsWith(startingLetter) && !usedWords.has(word));
+      return filteredWords.length > 0 ? filteredWords[Math.floor(Math.random() * filteredWords.length)] : "No word found";
     }
   </script>
 
