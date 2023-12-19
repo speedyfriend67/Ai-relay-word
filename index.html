@@ -1,40 +1,39 @@
-let previousWord = "";
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Word Relay Game</title>
+</head>
+<body>
 
-function relayLastWord() {
-  const userInput = document.getElementById('userInput').value;
+  <h1>Word Relay Game</h1>
+  <label for="wordInput">Enter a word:</label>
+  <input type="text" id="wordInput">
+  <button onclick="playWordRelay()">Play</button>
+  <p id="result"></p>
 
-  const words = userInput.split(/\s+/);
-  const lastWord = words[words.length - 1];
-  const createdWord = createWord(lastWord);
+  <script>
+    let usedWords = new Set();
+    let currentWord;
 
-  const resultDiv = document.getElementById('result');
-  resultDiv.innerHTML = `
-    <p>You said: "${userInput}"</p>
-    <p>The last word is: "${lastWord}"</p>
-    <p>AI created word: "${createdWord}"</p>
-  `;
-}
+    function playWordRelay() {
+      const wordInput = document.getElementById('wordInput');
+      const result = document.getElementById('result');
+      const nextWord = wordInput.value.toLowerCase();
 
-function createWord(lastWord) {
-  if (lastWord.length === 0) {
-    return "No input";
-  }
+      if (!currentWord || currentWord.slice(-1) === nextWord.charAt(0) && !usedWords.has(nextWord)) {
+        usedWords.add(nextWord);
+        currentWord = nextWord;
+        result.textContent = `Good! Next word should start with '${currentWord.slice(-1)}'`;
+        wordInput.value = '';
+      } else if (usedWords.has(nextWord)) {
+        result.textContent = 'You repeated a word. Try again!';
+      } else {
+        result.textContent = `Invalid word. It should start with '${currentWord.slice(-1)}'. Try again!`;
+      }
+    }
+  </script>
 
-  const firstLetter = lastWord.charAt(lastWord.length - 1);
-  const wordList = ["apple", "banana", /* ... (your word list) ... */];
-
-  const filteredWords = wordList.filter(word => word.charAt(0).toLowerCase() === firstLetter.toLowerCase());
-
-  if (filteredWords.length > 0) {
-    let newWord = "";
-    do {
-      const randomIndex = Math.floor(Math.random() * filteredWords.length);
-      newWord = filteredWords[randomIndex];
-    } while (newWord === previousWord);
-
-    previousWord = newWord;
-    return newWord;
-  } else {
-    return "No suitable word found";
-  }
-}
+</body>
+</html>
