@@ -41,12 +41,16 @@
     function relayLastWord() {
       const userInput = document.getElementById('userInput').value;
 
+      
       const words = userInput.split(/\s+/);
 
+      
       const lastWord = words[words.length - 1];
 
+      
       const createdWord = createWord(lastWord);
 
+     
       const resultDiv = document.getElementById('result');
       resultDiv.innerHTML = `
         <p>You said: "${userInput}"</p>
@@ -61,20 +65,19 @@
       }
 
       const firstLetter = lastWord.charAt(lastWord.length - 1);
-      const vowels = 'aeiou';
-      const consonants = 'bcdfghjklmnpqrstvwxyz';
 
-      let createdWord = '';
+      
+      const wordList = ["apple", "banana", "cherry", "dog", "elephant", "flower", "grape", "house", "igloo", "jungle"];
 
-      if (vowels.includes(firstLetter.toLowerCase())) {
-        createdWord = consonants.charAt(Math.floor(Math.random() * consonants.length));
-      } else if (consonants.includes(firstLetter.toLowerCase())) {
-        createdWord = vowels.charAt(Math.floor(Math.random() * vowels.length));
+    
+      const filteredWords = wordList.filter(word => word.charAt(0).toLowerCase() === firstLetter.toLowerCase());
+
+      if (filteredWords.length > 0) {
+        const randomIndex = Math.floor(Math.random() * filteredWords.length);
+        return filteredWords[randomIndex];
       } else {
-        createdWord = 'Invalid input';
+        return "No suitable word found";
       }
-
-      return createdWord;
     }
   </script>
 
