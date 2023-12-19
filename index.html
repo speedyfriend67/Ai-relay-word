@@ -58,7 +58,7 @@
     let usedWords = new Set();
     let currentWord;
 
-    function playWordRelay() {
+    async function playWordRelay() {
       const wordInput = document.getElementById('wordInput');
       const result = document.getElementById('result');
       const userWord = wordInput.value.toLowerCase();
@@ -67,7 +67,7 @@
         usedWords.add(userWord);
         currentWord = userWord;
 
-        const aiWord = generateRandomWord(userWord);
+        const aiWord = await getAIWord(userWord);
         usedWords.add(aiWord);
 
         result.textContent = `You: ${userWord} | AI: ${aiWord}`;
@@ -79,12 +79,29 @@
       }
     }
 
-    function generateRandomWord(userWord) {
-      // This is a basic example. You might want to replace this logic with more advanced AI capabilities.
+    async function getAIWord(userWord) {
       const startingLetter = userWord.slice(-1);
+      const apiUrl = `https://api.datamuse.com/words?sp=${startingLetter}*`;
+      
+      try {
+        const response = await fetch(apiUrl);
+        const data = await response.json();
+        
+        // Filter words that haven't been used and have a reasonable score
+        const filteredWords = data.filter(word => !usedWords.has(word.word) && word.score > 100);
+
+        // If there are suitable words, choose a random one; otherwise, fallback to a simple random word
+        return filteredWords.length > 0 ? filteredWords[Math.floor(Math.random() * filteredWords.length)].word : getRandomWord();
+      } catch (error) {
+        console.error('Error fetching data:', error);
+        // Fallback to a simple random word in case of an error
+        return getRandomWord();
+      }
+    }
+
+    function getRandomWord() {
       const randomWords = ["apple", "banana", "chocolate", "dog", "elephant", "friday", "guitar"];
-      const filteredWords = randomWords.filter(word => word.startsWith(startingLetter) && !usedWords.has(word));
-      return filteredWords.length > 0 ? filteredWords[Math.floor(Math.random() * filteredWords.length)] : "No word found";
+      return randomWords[Math.floor(Math.random() * randomWords.length)];
     }
   </script>
 
