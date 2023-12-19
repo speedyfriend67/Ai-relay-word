@@ -44,7 +44,7 @@
       
       const words = userInput.split(/\s+/);
 
-      
+    
       const lastWord = words[words.length - 1];
 
       
@@ -65,14 +65,17 @@
       }
 
       const firstLetter = lastWord.charAt(lastWord.length - 1);
+      const wordList = [
+        "apple", "banana", "cherry", "dog", "elephant", "flower", "grape", "house", "igloo", "jungle",
+        "kiwi", "lemon", "monkey", "notebook", "orange", "parrot", "quilt", "rose", "strawberry", "tiger",
+        "umbrella", "vase", "watermelon", "xylophone", "yogurt", "zebra"
+      ];
 
-      
-      const wordList = ["apple", "banana", "cherry", "dog", "elephant", "flower", "grape", "house", "igloo", "jungle"];
-
-    
+     
       const filteredWords = wordList.filter(word => word.charAt(0).toLowerCase() === firstLetter.toLowerCase());
 
       if (filteredWords.length > 0) {
+       
         const randomIndex = Math.floor(Math.random() * filteredWords.length);
         return filteredWords[randomIndex];
       } else {
