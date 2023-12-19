@@ -41,16 +41,12 @@
     function relayLastWord() {
       const userInput = document.getElementById('userInput').value;
 
-      // Split the user input into an array of words
       const words = userInput.split(/\s+/);
 
-      // Get the last word
       const lastWord = words[words.length - 1];
 
-      // Create a word with the first letter matching the last letter of the user's input
       const createdWord = createWord(lastWord);
 
-      // Display the result
       const resultDiv = document.getElementById('result');
       resultDiv.innerHTML = `
         <p>You said: "${userInput}"</p>
