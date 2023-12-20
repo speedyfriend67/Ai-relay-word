@@ -67,7 +67,7 @@
         usedWords.add(userWord);
         currentWord = userWord;
 
-        const aiWord = await getAIWord(userWord);
+        const aiWord = await getAIWord(currentWord);
         usedWords.add(aiWord);
 
         result.textContent = `You: ${userWord} | AI: ${aiWord}`;
