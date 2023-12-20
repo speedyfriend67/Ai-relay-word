@@ -58,6 +58,7 @@
   <input type="text" id="wordInput">
   <button onclick="playWordRelay()">Play</button>
   <button onclick="loadAIWord()">Load AI Word</button>
+  <button onclick="giveUp()">I Gave Up</button>
   <p id="result"></p>
 
   <div id="wordLog"></div>
@@ -151,7 +152,12 @@
       usedWords.clear();
       wordLogContainer.innerHTML = '';
     }
-  </script>
 
+    function giveUp() {
+      result.textContent = 'AI won! Better luck next time.';
+      // You can add additional actions or reset the game if needed.
+    }
+      </script>
 </body>
 </html>
+```
