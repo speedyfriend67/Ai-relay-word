@@ -33,7 +33,7 @@
       color: #fff;
       border: none;
       cursor: pointer;
-      margin-right: 10px;
+      margin: 10px;
     }
 
     button:hover {
@@ -49,6 +49,13 @@
     #wordLog {
       margin-top: 30px;
     }
+
+    #endScreen {
+      display: none;
+      margin-top: 30px;
+      font-size: 20px;
+      color: #ff0000;
+    }
   </style>
 </head>
 <body>
@@ -58,18 +65,21 @@
   <input type="text" id="wordInput">
   <button onclick="playWordRelay()">Play</button>
   <button onclick="loadAIWord()">Load AI Word</button>
+  <button onclick="deleteLastWord()">Delete Last Word</button>
+  <button onclick="clearAll()">Clear All</button>
   <button onclick="giveUp()">I Gave Up</button>
+
   <p id="result"></p>
 
   <div id="wordLog"></div>
 
-  <button onclick="deleteLastWord()">Delete Last Word</button>
-  <button onclick="clearAll()">Clear All</button>
+  <div id="endScreen">AI won! Better luck next time.</div>
 
   <script>
     let usedWords = new Set();
     let currentWord;
     let wordLogContainer = document.getElementById('wordLog');
+    let endScreen = document.getElementById('endScreen');
 
     async function playWordRelay() {
       const wordInput = document.getElementById('wordInput');
@@ -154,10 +164,10 @@
     }
 
     function giveUp() {
-      result.textContent = 'AI won! Better luck next time.';
+      endScreen.style.display = 'block';
       // You can add additional actions or reset the game if needed.
     }
-      </script>
+  </script>
+
 </body>
 </html>
-```
