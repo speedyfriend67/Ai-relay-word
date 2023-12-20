@@ -44,6 +44,10 @@
       color: #333;
       margin-top: 20px;
     }
+
+    #wordLog {
+      margin-top: 30px;
+    }
   </style>
 </head>
 <body>
@@ -54,9 +58,12 @@
   <button onclick="playWordRelay()">Play</button>
   <p id="result"></p>
 
+  <div id="wordLog"></div>
+
   <script>
     let usedWords = new Set();
     let currentWord;
+    let wordLogContainer = document.getElementById('wordLog');
 
     async function playWordRelay() {
       const wordInput = document.getElementById('wordInput');
@@ -72,6 +79,10 @@
 
         result.textContent = `You: ${userWord} | AI: ${aiWord}`;
         wordInput.value = '';
+
+        // Log the words played
+        logWord(userWord);
+        logWord(aiWord);
       } else if (usedWords.has(userWord)) {
         result.textContent = 'You repeated a word. Try again!';
       } else {
@@ -102,6 +113,12 @@
     function getRandomWord() {
       const randomWords = ["apple", "banana", "chocolate", "dog", "elephant", "friday", "guitar"];
       return randomWords[Math.floor(Math.random() * randomWords.length)];
+    }
+
+    function logWord(word) {
+      const logEntry = document.createElement('div');
+      logEntry.textContent = word;
+      wordLogContainer.appendChild(logEntry);
     }
   </script>
 
