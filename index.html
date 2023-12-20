@@ -33,6 +33,7 @@
       color: #fff;
       border: none;
       cursor: pointer;
+      margin-right: 10px;
     }
 
     button:hover {
@@ -60,6 +61,9 @@
   <p id="result"></p>
 
   <div id="wordLog"></div>
+
+  <button onclick="deleteLastWord()">Delete Last Word</button>
+  <button onclick="clearAll()">Clear All</button>
 
   <script>
     let usedWords = new Set();
@@ -129,6 +133,21 @@
         result.textContent = `AI: ${aiWord}`;
         logWord(aiWord);
       }
+    }
+
+    function deleteLastWord() {
+      const logEntries = wordLogContainer.children;
+      if (logEntries.length > 0) {
+        const lastEntry = logEntries[logEntries.length - 1];
+        const lastWord = lastEntry.textContent;
+        usedWords.delete(lastWord);
+        wordLogContainer.removeChild(lastEntry);
+      }
+    }
+
+    function clearAll() {
+      usedWords.clear();
+      wordLogContainer.innerHTML = '';
     }
   </script>
 
