@@ -7,7 +7,7 @@ Welcome to the Word Relay with AI game! This simple web application allows you t
 1. Enter a word in the input field and click the "Play" button.
 2. The AI will respond with a word that starts with the last letter of your word.
 3. Continue taking turns with the AI, each time entering a word that starts with the last letter of the AI's word.
-
+4. Generate New ai word
 ## Rules
 
 - Words must be at least 3 letters long.
