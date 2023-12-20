@@ -82,6 +82,8 @@
         const aiWord = await getAIWord(currentWord);
         usedWords.add(aiWord);
 
+        currentword = aiWord;
+        
         result.textContent = `You: ${userWord} | AI: ${aiWord}`;
         wordInput.value = '';
 
