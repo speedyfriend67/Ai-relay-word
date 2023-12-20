@@ -32,6 +32,7 @@ To run the application, simply open the `index.html` file in a web browser.
 ## Credits
 
 - The AI uses the Datamuse API for word suggestions.
+- @Hvven for the 85 line fix
 
 ## License
 
