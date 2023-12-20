@@ -56,6 +56,7 @@
   <label for="wordInput">Enter a word:</label>
   <input type="text" id="wordInput">
   <button onclick="playWordRelay()">Play</button>
+  <button onclick="loadAIWord()">Load AI Word</button>
   <p id="result"></p>
 
   <div id="wordLog"></div>
@@ -119,6 +120,15 @@
       const logEntry = document.createElement('div');
       logEntry.textContent = word;
       wordLogContainer.appendChild(logEntry);
+    }
+
+    async function loadAIWord() {
+      if (currentWord) {
+        const aiWord = await getAIWord(currentWord);
+        usedWords.add(aiWord);
+        result.textContent = `AI: ${aiWord}`;
+        logWord(aiWord);
+      }
     }
   </script>
 
